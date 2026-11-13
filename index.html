@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La noticia del gato astronauta</title>
+    <meta name="description" content="Una crónica ficticia desde la Luna." />
+    <meta property="og:title" content="La noticia del gato astronauta" />
+    <meta property="og:description" content="Una crónica ficticia desde la Luna." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <style>
+      :root {
+        --bg-paper: #f7f4ee;
+        --bg-surface: #efeae0;
+        --bg-plate: #121826;
+        --ink-primary: #1c1917;
+        --ink-secondary: #57534e;
+        --ink-muted: #78716c;
+        --border-hairline: rgba(28, 25, 23, 0.14);
+        --border-strong: #1c1917;
+        --accent-terracotta: #9a3412;
+        --accent-terracotta-hover: #7c2d12;
+        --accent-lapis: #1e3a8a;
+        --success-bg: #edf4ef;
+        --success-border: #2c5e3b;
+        --success-ink: #173d23;
+        --font-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+        --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-paper);
+        color: var(--ink-primary);
+        font-family: var(--font-serif);
+        line-height: 1.65;
+        min-height: 100vh;
+      }
+
+      .page-shell {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 28px 24px 56px;
+      }
+
+      /* Cabecera tipo gaceta editorial */
+      .masthead {
+        border-top: 3px solid var(--border-strong);
+        border-bottom: 1px solid var(--border-strong);
+        padding: 12px 0;
+        margin-bottom: 36px;
+      }
+
+      .masthead-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px 24px;
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-secondary);
+      }
+
+      .masthead-edition {
+        font-weight: 600;
+        color: var(--ink-primary);
+      }
+
+      .masthead-rule {
+        height: 1px;
+        background-color: var(--border-hairline);
+        margin-top: 8px;
+      }
+
+      /* Composición principal de dos columnas */
+      .broadsheet-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr);
+        gap: 48px;
+        align-items: start;
+      }
+
+      .kicker {
+        margin: 0 0 12px;
+        font-family: var(--font-sans);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-terracotta);
+      }
+
+      h1.headline {
+        margin: 0 0 16px;
+        font-size: clamp(2.25rem, 4.4vw, 3.65rem);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+        color: var(--ink-primary);
+      }
+
+      .deck {
+        margin: 0 0 28px;
+        font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+        font-style: italic;
+        font-weight: 400;
+        line-height: 1.45;
+        color: var(--ink-secondary);
+        max-width: 52ch;
+      }
+
+      /* Panel de prueba de contacto */
+      .dispatch-box {
+        padding: 20px 24px;
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: 6px;
+        margin-bottom: 32px;
+      }
+
+      .dispatch-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .btn-probar {
+        appearance: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 10px 24px;
+        font-family: var(--font-sans);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+        background-color: var(--accent-terracotta);
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn-probar:hover {
+        background-color: var(--accent-terracotta-hover);
+      }
+
+      .btn-probar:active {
+        transform: translateY(1px);
+      }
+
+      .btn-probar:focus-visible {
+        outline: 2px solid var(--accent-lapis);
+        outline-offset: 3px;
+      }
+
+      .dispatch-hint {
+        font-family: var(--font-sans);
+        font-size: 0.875rem;
+        color: var(--ink-secondary);
+      }
+
+      .signal-output {
+        margin-top: 16px;
+        padding: 14px 16px;
+        background-color: var(--success-bg);
+        border: 1px solid var(--success-border);
+        border-radius: 4px;
+        color: var(--success-ink);
+        display: none;
+      }
+
+      .signal-output.is-visible {
+        display: block;
+        animation: fadeSlideIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .signal-message {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .signal-meta {
+        margin: 6px 0 0;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-variant-numeric: tabular-nums;
+        color: var(--success-ink);
+        opacity: 0.88;
+      }
+
+      @keyframes fadeSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Cuerpo de la crónica */
+      .article-byline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 12px;
+        padding: 12px 0;
+        margin-bottom: 20px;
+        border-top: 1px solid var(--border-hairline);
+        border-bottom: 1px solid var(--border-hairline);
+        font-family: var(--font-sans);
+        font-size: 0.8125rem;
+        color: var(--ink-secondary);
+      }
+
+      .article-body {
+        max-width: 65ch;
+      }
+
+      .article-body p {
+        margin: 0 0 18px;
+        font-size: 1.0625rem;
+        line-height: 1.78;
+        color: var(--ink-primary);
+      }
+
+      .article-body p.lead-paragraph::first-letter {
+        float: left;
+        font-size: 3.6rem;
+        line-height: 0.85;
+        font-weight: 700;
+        padding-right: 10px;
+        padding-top: 4px;
+        color: var(--ink-primary);
+      }
+
+      .pull-quote {
+        margin: 28px 0;
+        padding: 18px 0;
+        border-top: 1px solid var(--border-hairline);
+        border-bottom: 1px solid var(--border-hairline);
+        font-size: 1.25rem;
+        font-style: italic;
+        line-height: 1.5;
+        color: var(--ink-secondary);
+      }
+
+      /* Columna derecha: lámina ilustrada y ficha técnica */
+      .editorial-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .plate-figure {
+        margin: 0;
+        padding: 16px;
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: 6px;
+      }
+
+      .plate-canvas {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        background-color: var(--bg-plate);
+        border-radius: 4px;
+        overflow: hidden;
+        display: block;
+      }
+
+      .plate-canvas svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .plate-caption {
+        margin-top: 12px;
+        font-size: 0.84rem;
+        font-style: italic;
+        line-height: 1.5;
+        color: var(--ink-secondary);
+      }
+
+      .plate-caption strong {
+        font-style: normal;
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-primary);
+        margin-right: 6px;
+      }
+
+      .archive-record {
+        border-top: 1px solid var(--border-strong);
+        padding-top: 16px;
+      }
+
+      .archive-heading {
+        margin: 0 0 12px;
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--ink-primary);
+      }
+
+      .archive-list {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0;
+      }
+
+      .archive-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border-hairline);
+        font-size: 0.875rem;
+      }
+
+      .archive-row dt {
+        font-family: var(--font-sans);
+        color: var(--ink-secondary);
+      }
+
+      .archive-row dd {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+        color: var(--ink-primary);
+      }
+
+      .footer-colophon {
+        margin-top: 48px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-hairline);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px 24px;
+        font-family: var(--font-sans);
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+      }
+
+      @media (max-width: 900px) {
+        .broadsheet-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn-probar,
+        .signal-output.is-visible {
+          transition: none;
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="masthead-meta">
+          <span class="masthead-edition">Gaceta del Cráter</span>
+          <span>Edición Extraordinaria &middot; Mar de la Tranquilidad</span>
+          <span>Archivo Lunar N.º 04</span>
+        </div>
+        <div class="masthead-rule" aria-hidden="true"></div>
+      </header>
+
+      <main class="broadsheet-grid">
+        <article>
+          <p class="kicker">Despacho de última hora</p>
+          <h1 class="headline">La noticia del gato astronauta</h1>
+          <p class="deck">Una crónica ficticia desde la Luna</p>
+
+          <section class="dispatch-box" aria-label="Prueba de enlace lunar">
+            <div class="dispatch-controls">
+              <button type="button" id="probar-btn" class="btn-probar">Probar</button>
+              <span class="dispatch-hint" id="dispatch-hint">
+                Pulsa el botón para verificar el enlace de radio con el módulo felino.
+              </span>
+            </div>
+
+            <div
+              id="signal-output"
+              class="signal-output"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <p id="signal-message" class="signal-message"></p>
+              <p id="signal-meta" class="signal-meta"></p>
+            </div>
+          </section>
+
+          <div class="article-byline">
+            <span>Por la Redacción Orbital</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Sector Mare Tranquillitatis</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>Lectura de 2 min</span>
+          </div>
+
+          <div class="article-body">
+            <p class="lead-paragraph">
+              A las tres y catorce de la madrugada terrestre, la antena parabólica de la red de
+              observación registró un leve ronroneo modulado en banda S. No se trataba de interferencia
+              solar ni de un eco perdido entre satélites antiguos: era el comandante Bigotes, primer
+              felino en desplegar su manta térmica sobre el regolito gris y reclamar la sombra de un
+              pequeño cráter como su nuevo lugar favorito para dormir la siesta.
+            </p>
+
+            <blockquote class="pull-quote">
+              «Un pequeño salto para un gato, pero un desorden considerable para cualquier ovillo que
+              flote en gravedad cero.»
+            </blockquote>
+
+            <p>
+              Según los apuntes del cuaderno de bitácora, la misión transcurrió sin incidentes mayores,
+              salvo una breve persecución tras un reflejo azul proyectado por la Tierra creciente sobre
+              el visor presurizado. Mientras los ingenieros esperan la siguiente ventana de transmisión,
+              el viajero permanece atento al horizonte lunar, vigilando con serenidad el silencio del
+              espacio.
+            </p>
+          </div>
+        </article>
+
+        <aside class="editorial-aside" aria-label="Ilustración y ficha de misión">
+          <figure class="plate-figure">
+            <div class="plate-canvas">
+              <svg
+                viewBox="0 0 640 480"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-labelledby="svg-title svg-desc"
+              >
+                <title id="svg-title">Ilustración del gato astronauta sobre la superficie lunar</title>
+                <desc id="svg-desc">
+                  Un gato con traje espacial y casco esférico observando la Tierra desde un cráter de la Luna bajo un cielo estrellado.
+                </desc>
+                <defs>
+                  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0b101d" />
+                    <stop offset="100%" stop-color="#1b263b" />
+                  </linearGradient>
+                  <linearGradient id="moonSurface" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#d6d1c4" />
+                    <stop offset="100%" stop-color="#9e988c" />
+                  </linearGradient>
+                  <radialGradient id="earthGrad" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#93c5fd" />
+                    <stop offset="55%" stop-color="#2563eb" />
+                    <stop offset="100%" stop-color="#0f172a" />
+                  </radialGradient>
+                  <radialGradient id="helmetGlow" cx="35%" cy="30%" r="65%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32" />
+                    <stop offset="70%" stop-color="#cbd5e1" stop-opacity="0.08" />
+                    <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.24" />
+                  </radialGradient>
+                </defs>
+
+                <!-- Cielo lunar -->
+                <rect width="640" height="480" fill="url(#skyGrad)" />
+
+                <!-- Estrellas -->
+                <g fill="#f8fafc" opacity="0.85">
+                  <circle cx="62" cy="54" r="1.5" />
+                  <circle cx="118" cy="112" r="1.1" />
+                  <circle cx="176" cy="42" r="1.8" />
+                  <circle cx="235" cy="96" r="1.2" />
+                  <circle cx="290" cy="48" r="1.4" />
+                  <circle cx="364" cy="78" r="1.2" />
+                  <circle cx="412" cy="36" r="1.7" />
+                  <circle cx="578" cy="64" r="1.6" />
+                  <circle cx="598" cy="168" r="1.2" />
+                  <circle cx="88" cy="204" r="1.3" />
+                  <circle cx="144" cy="256" r="1.1" />
+                  <circle cx="445" cy="192" r="1.4" />
+                </g>
+
+                <!-- La Tierra distante -->
+                <g transform="translate(505, 108)">
+                  <circle cx="0" cy="0" r="38" fill="url(#earthGrad)" />
+                  <path
+                    d="M -18 -14 C -8 -20, 6 -16, 12 -4 C 16 4, 4 14, -8 10 C -18 6, -24 -6, -18 -14 Z"
+                    fill="#6ee7b7"
+                    opacity="0.72"
+                  />
+                  <path
+                    d="M 8 12 C 16 8, 26 14, 22 22 C 18 28, 6 24, 8 12 Z"
+                    fill="#86efac"
+                    opacity="0.6"
+                  />
+                  <path
+                    d="M -26 -2 C -12 -6, 12 -2, 26 -10"
+                    stroke="#ffffff"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    fill="none"
+                    opacity="0.55"
+                  />
+                </g>
+
+                <!-- Colinas y horizonte lunar -->
+                <path
+                  d="M 0 330 Q 150 295 320 322 T 640 308 L 640 480 L 0 480 Z"
+                  fill="#8a8478"
+                />
+                <path
+                  d="M 0 356 Q 190 326 390 352 T 640 342 L 640 480 L 0 480 Z"
+                  fill="url(#moonSurface)"
+                />
+
+                <!-- Cráteres -->
+                <ellipse cx="118" cy="408" rx="54" ry="15" fill="#7c766b" opacity="0.65" />
+                <ellipse cx="118" cy="410" rx="44" ry="10" fill="#a8a296" opacity="0.55" />
+                <ellipse cx="520" cy="426" rx="68" ry="18" fill="#7c766b" opacity="0.65" />
+                <ellipse cx="520" cy="428" rx="56" ry="12" fill="#b3ada0" opacity="0.5" />
+
+                <!-- Sombra del gato astronauta -->
+                <ellipse cx="322" cy="406" rx="74" ry="13" fill="#5e594f" opacity="0.45" />
+
+                <!-- Bandera de crónica lunar -->
+                <g transform="translate(428, 250)">
+                  <line x1="0" y1="0" x2="0" y2="148" stroke="#e2e8f0" stroke-width="3.5" />
+                  <rect x="2" y="4" width="66" height="40" rx="2" fill="#9a3412" />
+                  <circle cx="24" cy="24" r="9" fill="#f7f4ee" />
+                  <circle cx="27" cy="22" r="7" fill="#9a3412" />
+                  <line x1="40" y1="18" x2="58" y2="18" stroke="#f7f4ee" stroke-width="2.5" />
+                  <line x1="40" y1="28" x2="54" y2="28" stroke="#f7f4ee" stroke-width="2.5" />
+                </g>
+
+                <!-- Gato Astronauta -->
+                <g transform="translate(310, 290)">
+                  <!-- Cola espacial articulada -->
+                  <path
+                    d="M -42 74 C -84 74, -104 38, -86 14 C -76 2, -62 10, -68 24"
+                    fill="none"
+                    stroke="#e5e0d5"
+                    stroke-width="14"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M -42 74 C -84 74, -104 38, -86 14 C -76 2, -62 10, -68 24"
+                    fill="none"
+                    stroke="#9a3412"
+                    stroke-width="14"
+                    stroke-dasharray="6 18"
+                    stroke-linecap="round"
+                  />
+
+                  <!-- Mochila soporte vital -->
+                  <rect x="-52" y="-12" width="32" height="68" rx="8" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+                  <rect x="-46" y="-2" width="12" height="18" rx="2" fill="#9a3412" />
+
+                  <!-- Cuerpo del traje -->
+                  <rect x="-38" y="-18" width="76" height="96" rx="30" fill="#f4f1ea" stroke="#475569" stroke-width="2.5" />
+                  <!-- Insignia y panel pectoral -->
+                  <rect x="-18" y="8" width="36" height="24" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5" />
+                  <circle cx="-6" cy="20" r="4" fill="#9a3412" />
+                  <line x1="3" y1="16" x2="12" y2="16" stroke="#1e3a8a" stroke-width="2.5" stroke-linecap="round" />
+                  <line x1="3" y1="23" x2="10" y2="23" stroke="#475569" stroke-width="2" stroke-linecap="round" />
+
+                  <!-- Brazos -->
+                  <path
+                    d="M -34 2 C -58 14, -56 42, -38 46"
+                    fill="#f4f1ea"
+                    stroke="#475569"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M 34 2 C 58 10, 62 34, 44 42"
+                    fill="#f4f1ea"
+                    stroke="#475569"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="-39" cy="46" r="9" fill="#9a3412" />
+                  <circle cx="45" cy="41" r="9" fill="#9a3412" />
+
+                  <!-- Botas lunares -->
+                  <rect x="-32" y="72" width="24" height="36" rx="10" fill="#e2e8f0" stroke="#475569" stroke-width="2" />
+                  <rect x="8" y="72" width="24" height="36" rx="10" fill="#e2e8f0" stroke="#475569" stroke-width="2" />
+                  <rect x="-35" y="96" width="30" height="14" rx="6" fill="#334155" />
+                  <rect x="5" y="96" width="30" height="14" rx="6" fill="#334155" />
+
+                  <!-- Anillo del cuello -->
+                  <ellipse cx="0" cy="-22" rx="34" ry="9" fill="#94a3b8" stroke="#334155" stroke-width="2" />
+
+                  <!-- Cabeza del gato dentro del casco -->
+                  <g transform="translate(0, -64)">
+                    <!-- Orejas -->
+                    <polygon points="-28,-8 -36,-38 -10,-22" fill="#d97706" stroke="#78350f" stroke-width="1.5" />
+                    <polygon points="28,-8 36,-38 10,-22" fill="#d97706" stroke="#78350f" stroke-width="1.5" />
+                    <polygon points="-24,-12 -30,-30 -14,-20" fill="#fde68a" />
+                    <polygon points="24,-12 30,-30 14,-20" fill="#fde68a" />
+
+                    <!-- Rostro felino -->
+                    <ellipse cx="0" cy="0" rx="31" ry="27" fill="#d97706" stroke="#78350f" stroke-width="1.5" />
+                    <ellipse cx="0" cy="8" rx="15" ry="11" fill="#fef3c7" />
+                    <!-- Rayas atigradas -->
+                    <path d="M -6 -25 L -4 -17 M 0 -27 L 0 -17 M 6 -25 L 4 -17" stroke="#78350f" stroke-width="2" stroke-linecap="round" />
+                    <!-- Ojos -->
+                    <ellipse cx="-11" cy="-3" rx="4.2" ry="5" fill="#1c1917" />
+                    <ellipse cx="11" cy="-3" rx="4.2" ry="5" fill="#1c1917" />
+                    <circle cx="-12.5" cy="-4.5" r="1.5" fill="#ffffff" />
+                    <circle cx="9.5" cy="-4.5" r="1.5" fill="#ffffff" />
+                    <!-- Nariz y boca -->
+                    <polygon points="-3.5,4 3.5,4 0,8" fill="#9a3412" />
+                    <path d="M -5 11 Q 0 15 5 11" fill="none" stroke="#78350f" stroke-width="1.6" stroke-linecap="round" />
+                    <!-- Bigotes -->
+                    <g stroke="#78350f" stroke-width="1.2" opacity="0.8">
+                      <line x1="-14" y1="6" x2="-30" y2="3" />
+                      <line x1="-14" y1="9" x2="-31" y2="10" />
+                      <line x1="14" y1="6" x2="30" y2="3" />
+                      <line x1="14" y1="9" x2="31" y2="10" />
+                    </g>
+                  </g>
+
+                  <!-- Visor esférico de cristal -->
+                  <circle
+                    cx="0"
+                    cy="-66"
+                    r="50"
+                    fill="url(#helmetGlow)"
+                    stroke="#cbd5e1"
+                    stroke-width="3"
+                  />
+                  <path
+                    d="M -32 -94 A 38 38 0 0 1 -6 -104"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="3.5"
+                    stroke-linecap="round"
+                    opacity="0.7"
+                  />
+                </g>
+              </svg>
+            </div>
+            <figcaption class="plate-caption">
+              <strong>Lámina I</strong>
+              El comandante Bigotes inspeccionando el borde del cráter bajo el resplandor de la Tierra.
+            </figcaption>
+          </figure>
+
+          <section class="archive-record" aria-label="Datos del despacho">
+            <h2 class="archive-heading">Registro del despacho</h2>
+            <dl class="archive-list">
+              <div class="archive-row">
+                <dt>Ubicación</dt>
+                <dd>0°40'26" N · 23°28'22" E</dd>
+              </div>
+              <div class="archive-row">
+                <dt>Tripulación</dt>
+                <dd>1 gato atigrado</dd>
+              </div>
+              <div class="archive-row">
+                <dt>Distancia media</dt>
+                <dd>384 400 km</dd>
+              </div>
+              <div class="archive-row">
+                <dt>Última señal</dt>
+                <dd id="last-signal-time">En espera</dd>
+              </div>
+            </dl>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="footer-colophon">
+        <span>La noticia del gato astronauta &mdash; Una crónica ficticia desde la Luna</span>
+        <span>Documento estático autónomo (HTML + CSS + JS)</span>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var button = document.getElementById("probar-btn");
+        var output = document.getElementById("signal-output");
+        var messageEl = document.getElementById("signal-message");
+        var metaEl = document.getElementById("signal-meta");
+        var lastSignalEl = document.getElementById("last-signal-time");
+        var hintEl = document.getElementById("dispatch-hint");
+        var contactCount = 0;
+
+        if (!button || !output || !messageEl || !metaEl || !lastSignalEl) {
+          return;
+        }
+
+        button.addEventListener("click", function () {
+          contactCount += 1;
+          var now = new Date();
+          var timeFormatted = now.toLocaleTimeString("es-ES", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+
+          messageEl.textContent = "¡Contacto desde la Luna!";
+          metaEl.textContent =
+            "Transmisión #" +
+            contactCount +
+            " recibida a las " +
+            timeFormatted +
+            " · Enlace confirmado";
+          lastSignalEl.textContent = timeFormatted + " (#" + contactCount + ")";
+
+          if (hintEl) {
+            hintEl.textContent = "Enlace verificado. Puedes volver a probar cuando quieras.";
+          }
+
+          output.classList.remove("is-visible");
+          void output.offsetWidth;
+          output.classList.add("is-visible");
+        });
+      })();
+    </script>
+  </body>
+</html>
